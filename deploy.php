@@ -22,7 +22,7 @@ add('writable_dirs', [
 
 // Hosts
 
-host('coforge.xyz')
+host('diidjaaheer.live')
     ->set('remote_user', 'deployer')
     ->set('deploy_path', '~/diidjaaheer.live');
 
