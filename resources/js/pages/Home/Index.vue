@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
-import PublicLayout from '@/layouts/PublicLayout.vue';
 import {
     Card,
     CardContent,
@@ -8,6 +7,7 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
+import PublicLayout from '@/layouts/PublicLayout.vue';
 
 interface Props {
     latestNews: unknown[];

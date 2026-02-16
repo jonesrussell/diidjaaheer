@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import { ArrowDown, ArrowUp, Edit, Eye, EyeOff, Trash2 } from 'lucide-vue-next';
+import { computed } from 'vue';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-import { ArrowDown, ArrowUp, Edit, Eye, EyeOff, Trash2 } from 'lucide-vue-next';
-import { computed } from 'vue';
 import ArticleStatusBadge from './ArticleStatusBadge.vue';
 
 interface ColumnDefinition {

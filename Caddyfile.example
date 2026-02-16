@@ -1,0 +1,98 @@
+# Caddy Configuration Example for diidjaaheer.live
+#
+# This file should be placed on your production server at:
+# /etc/caddy/Caddyfile (or wherever Caddy looks for config)
+#
+# On the same server as movies-of-war.com, add this block to the existing Caddyfile.
+# After updating, reload Caddy: sudo systemctl reload caddy
+
+diidjaaheer.live {
+  root * /home/deployer/diidjaaheer.live/current/public
+
+  # Enable gzip and zstd compression
+  encode gzip zstd
+
+  # Vite-built assets - long cache (1 year) with immutable flag
+  # Vite uses content-based hashing, so long cache is safe
+  @build {
+    path /build/*
+  }
+  handle @build {
+    header Cache-Control "public, max-age=31536000, immutable"
+    file_server
+  }
+
+  # Static images - long cache (1 year)
+  @images {
+    path /images/*
+  }
+  handle @images {
+    header Cache-Control "public, max-age=31536000, immutable"
+    file_server
+  }
+
+  # Favicons and static assets - long cache (1 year)
+  @png {
+    path *.png
+  }
+  handle @png {
+    header Cache-Control "public, max-age=31536000, immutable"
+    file_server
+  }
+
+  @ico {
+    path *.ico
+  }
+  handle @ico {
+    header Cache-Control "public, max-age=31536000, immutable"
+    file_server
+  }
+
+  @svg {
+    path *.svg
+  }
+  handle @svg {
+    header Cache-Control "public, max-age=31536000, immutable"
+    file_server
+  }
+
+  # Web manifest - shorter cache (1 day) as it may change
+  @webmanifest {
+    path *.webmanifest
+  }
+  handle @webmanifest {
+    header Cache-Control "public, max-age=86400"
+    file_server
+  }
+
+  # Robots.txt - short cache (1 hour)
+  @robots {
+    path /robots.txt
+  }
+  handle @robots {
+    header Cache-Control "public, max-age=3600"
+    file_server
+  }
+
+  # PHP files and Laravel routes - pass to PHP-FPM
+  file_server
+  php_fastcgi * unix//run/php/php8.4-fpm.sock {
+    resolve_root_symlink
+  }
+
+  log {
+    output file /home/deployer/diidjaaheer.live/log/access.log {
+      mode 0644
+    }
+  }
+
+  handle_errors {
+    @404 {
+      expression {http.error.status_code} == 404
+    }
+    rewrite @404 /404.html
+    file_server {
+      root /var/deployer
+    }
+  }
+}

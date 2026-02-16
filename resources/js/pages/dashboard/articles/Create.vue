@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import ArticleForm from '@/components/admin/ArticleForm.vue';
-import { Button } from '@/components/ui/button';
-import AppLayout from '@/layouts/AppLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
 import { ArrowLeft } from 'lucide-vue-next';
 import { ref } from 'vue';
+import ArticleForm from '@/components/admin/ArticleForm.vue';
+import { Button } from '@/components/ui/button';
+import AppLayout from '@/layouts/AppLayout.vue';
 
 interface FieldDefinition {
     name: string;

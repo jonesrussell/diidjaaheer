@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { Head, router } from '@inertiajs/vue3';
+import { Archive, ArrowUpDown, FileText, RotateCcw, Trash2 } from 'lucide-vue-next';
+import { computed, ref, watch } from 'vue';
 import BulkActionBar from '@/components/admin/BulkActionBar.vue';
 import DeleteConfirmDialog from '@/components/admin/DeleteConfirmDialog.vue';
 import StatCard from '@/components/admin/StatCard.vue';
@@ -14,9 +17,6 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { Head, router } from '@inertiajs/vue3';
-import { Archive, ArrowUpDown, FileText, RotateCcw, Trash2 } from 'lucide-vue-next';
-import { computed, ref, watch } from 'vue';
 
 interface Article {
     id: number;

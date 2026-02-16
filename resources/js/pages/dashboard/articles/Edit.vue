@@ -1,13 +1,13 @@
 <script setup lang="ts">
+import { Head, router } from '@inertiajs/vue3';
+import { ArrowLeft, Trash2 } from 'lucide-vue-next';
+import { computed, ref } from 'vue';
 import ArticleForm from '@/components/admin/ArticleForm.vue';
 import DeleteConfirmDialog from '@/components/admin/DeleteConfirmDialog.vue';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { Head, router } from '@inertiajs/vue3';
-import { ArrowLeft, Trash2 } from 'lucide-vue-next';
-import { computed, ref } from 'vue';
 
 interface FieldDefinition {
     name: string;

@@ -1,11 +1,11 @@
 <script setup lang="ts">
+import { Head } from '@inertiajs/vue3';
+import { ArrowLeft, Calendar, Edit, ExternalLink, User } from 'lucide-vue-next';
 import ArticleStatusBadge from '@/components/admin/ArticleStatusBadge.vue';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { Head, router } from '@inertiajs/vue3';
-import { ArrowLeft, Calendar, Edit, ExternalLink, User } from 'lucide-vue-next';
 
 interface Article {
     id: number;

@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { Head, router } from '@inertiajs/vue3';
+import { FileCheck, FilePlus, FileText, Plus } from 'lucide-vue-next';
+import { computed, ref, watch } from 'vue';
 import ArticlesTable from '@/components/admin/ArticlesTable.vue';
 import BulkActionBar from '@/components/admin/BulkActionBar.vue';
 import DeleteConfirmDialog from '@/components/admin/DeleteConfirmDialog.vue';
@@ -6,9 +9,6 @@ import FiltersBar from '@/components/admin/FiltersBar.vue';
 import StatCard from '@/components/admin/StatCard.vue';
 import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { Head, router } from '@inertiajs/vue3';
-import { FileCheck, FilePlus, FileText, Plus } from 'lucide-vue-next';
-import { computed, ref, watch } from 'vue';
 
 interface Article {
     id: number;

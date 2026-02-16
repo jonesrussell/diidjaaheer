@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import { X } from 'lucide-vue-next';
+import { computed, ref } from 'vue';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
-import { X } from 'lucide-vue-next';
-import { computed, ref } from 'vue';
 
 interface Option {
     id: number;
