@@ -12,6 +12,11 @@ import {
 } from '@/components/ui/select';
 import TagMultiSelect from './TagMultiSelect.vue';
 
+interface SelectOption {
+    value: string;
+    label: string;
+}
+
 interface FieldDefinition {
     name: string;
     type: string;
@@ -21,6 +26,7 @@ interface FieldDefinition {
     relationship?: string;
     display_field?: string;
     placeholder?: string;
+    options?: SelectOption[];
 }
 
 interface Props {
@@ -54,6 +60,8 @@ const isVisible = (field: FieldDefinition): boolean => {
     // published_at and is_featured are handled by the page component, not the form
     return !['published_at'].includes(field.name);
 };
+
+const getSelectOptions = (field: FieldDefinition): SelectOption[] => field.options ?? [];
 </script>
 
 <template>
@@ -164,7 +172,7 @@ const isVisible = (field: FieldDefinition): boolean => {
                                 <span v-if="field.required" class="text-destructive">*</span>
                             </Label>
                             <Select
-                                :model-value="modelValue[field.name]"
+                                :model-value="(modelValue[field.name] as string | number | undefined)"
                                 @update:model-value="updateField(field.name, $event)"
                             >
                                 <SelectTrigger
@@ -207,7 +215,7 @@ const isVisible = (field: FieldDefinition): boolean => {
                                 <span v-if="field.required" class="text-destructive">*</span>
                             </Label>
                             <Select
-                                :model-value="modelValue[field.name]"
+                                :model-value="(modelValue[field.name] as string | number | undefined)"
                                 @update:model-value="updateField(field.name, $event)"
                             >
                                 <SelectTrigger
@@ -218,7 +226,7 @@ const isVisible = (field: FieldDefinition): boolean => {
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectItem
-                                        v-for="opt in (field as any).options"
+                                        v-for="opt in getSelectOptions(field)"
                                         :key="opt.value"
                                         :value="opt.value"
                                     >

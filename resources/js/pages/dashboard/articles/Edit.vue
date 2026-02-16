@@ -83,14 +83,14 @@ const handleSubmit = (publish: boolean = false) => {
 
     const data = {
         ...form.value,
-        published_at: publish
+        published_at: (publish
             ? (form.value.published_at || new Date().toISOString())
             : isPublished.value
                 ? form.value.published_at
-                : null,
+                : null) as string | null,
     };
 
-    router.patch(`${routePrefix}/${props.article.id}`, data, {
+    router.patch(`${routePrefix}/${props.article.id}`, data as Parameters<typeof router.patch>[1], {
         preserveScroll: true,
         onError: (err) => { errors.value = err; },
         onFinish: () => { processing.value = false; },
