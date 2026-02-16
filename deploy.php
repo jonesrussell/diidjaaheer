@@ -6,7 +6,7 @@ require 'recipe/laravel.php';
 
 // Config
 
-set('repository', 'git@github.com:jonesrussell/diidjaaheer.git');
+set('repository', 'git@github-diidjaaheer:jonesrussell/diidjaaheer.git');
 set('keep_releases', 5);
 
 add('shared_files', [
@@ -24,7 +24,7 @@ set('writable_acl_groups', ['www-data']);
 
 // Hosts
 
-host('diidjaaheer.live')
+host('coforge.xyz')
     ->set('remote_user', 'deployer')
     ->set('deploy_path', '~/diidjaaheer.live');
 
