@@ -1,0 +1,14 @@
+[Unit]
+Description=Diidjaaheer North Cloud article subscription
+After=network.target
+ConditionPathExists=/home/deployer/diidjaaheer.live/current
+
+[Service]
+Type=simple
+WorkingDirectory=/home/deployer/diidjaaheer.live/current
+ExecStart=/usr/bin/php artisan articles:subscribe
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=default.target
