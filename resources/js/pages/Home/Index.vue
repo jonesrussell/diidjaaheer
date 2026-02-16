@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import PublicLayout from '@/layouts/PublicLayout.vue';
-import { BookOpen, Calendar, ExternalLink, Globe, History, Languages, MapPin, Users } from 'lucide-vue-next';
+import { BookOpen, ExternalLink, Globe, History, Languages, MapPin } from 'lucide-vue-next';
 
 interface NewsItem {
     title?: string;
