@@ -28,6 +28,8 @@ defineProps<Props>();
             font-family="'DM Serif Display', serif"
             font-size="32"
             font-weight="400"
-        >D</text>
+        >
+            D
+        </text>
     </svg>
 </template>

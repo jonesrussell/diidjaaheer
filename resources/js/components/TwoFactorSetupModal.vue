@@ -281,7 +281,9 @@ watch(
                                         />
                                     </InputOTPGroup>
                                 </InputOTP>
-                                <InputError :message="getConfirmCodeError(errors)" />
+                                <InputError
+                                    :message="getConfirmCodeError(errors)"
+                                />
                             </div>
 
                             <div class="flex w-full items-center space-x-5">

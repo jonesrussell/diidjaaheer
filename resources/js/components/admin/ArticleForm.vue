@@ -33,7 +33,10 @@ interface Props {
     fields: FieldDefinition[];
     modelValue: Record<string, unknown>;
     errors?: Record<string, string>;
-    relationOptions?: Record<string, Array<{ id: number; name: string; [key: string]: unknown }>>;
+    relationOptions?: Record<
+        string,
+        Array<{ id: number; name: string; [key: string]: unknown }>
+    >;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -49,11 +52,18 @@ const updateField = (name: string, value: unknown) => {
     emit('update:modelValue', { ...props.modelValue, [name]: value });
 };
 
-const getRelationOptions = (field: FieldDefinition): Array<{ id: number; name: string; [key: string]: unknown }> => {
-    if (field.name === 'news_source_id') return props.relationOptions.news_sources ?? [];
+const getRelationOptions = (
+    field: FieldDefinition,
+): Array<{ id: number; name: string; [key: string]: unknown }> => {
+    if (field.name === 'news_source_id')
+        return props.relationOptions.news_sources ?? [];
     if (field.name === 'tags') return props.relationOptions.tags ?? [];
     // For custom belongs-to/belongs-to-many, check by relationship name or field name
-    return props.relationOptions[field.name] ?? props.relationOptions[field.relationship ?? ''] ?? [];
+    return (
+        props.relationOptions[field.name] ??
+        props.relationOptions[field.relationship ?? ''] ??
+        []
+    );
 };
 
 const isVisible = (field: FieldDefinition): boolean => {
@@ -61,7 +71,8 @@ const isVisible = (field: FieldDefinition): boolean => {
     return !['published_at'].includes(field.name);
 };
 
-const getSelectOptions = (field: FieldDefinition): SelectOption[] => field.options ?? [];
+const getSelectOptions = (field: FieldDefinition): SelectOption[] =>
+    field.options ?? [];
 </script>
 
 <template>
@@ -74,15 +85,25 @@ const getSelectOptions = (field: FieldDefinition): SelectOption[] => field.optio
                         <template v-if="field.type === 'text'">
                             <Label :for="field.name">
                                 {{ field.label }}
-                                <span v-if="field.required" class="text-destructive">*</span>
+                                <span
+                                    v-if="field.required"
+                                    class="text-destructive"
+                                    >*</span
+                                >
                             </Label>
                             <Input
                                 :id="field.name"
-                                :model-value="(modelValue[field.name] as string) ?? ''"
+                                :model-value="
+                                    (modelValue[field.name] as string) ?? ''
+                                "
                                 type="text"
                                 :placeholder="`Enter ${field.label.toLowerCase()}`"
-                                :class="{ 'border-destructive': errors[field.name] }"
-                                @update:model-value="updateField(field.name, $event)"
+                                :class="{
+                                    'border-destructive': errors[field.name],
+                                }"
+                                @update:model-value="
+                                    updateField(field.name, $event)
+                                "
                             />
                         </template>
 
@@ -90,15 +111,28 @@ const getSelectOptions = (field: FieldDefinition): SelectOption[] => field.optio
                         <template v-else-if="field.type === 'url'">
                             <Label :for="field.name">
                                 {{ field.label }}
-                                <span v-if="field.required" class="text-destructive">*</span>
+                                <span
+                                    v-if="field.required"
+                                    class="text-destructive"
+                                    >*</span
+                                >
                             </Label>
                             <Input
                                 :id="field.name"
-                                :model-value="(modelValue[field.name] as string) ?? ''"
+                                :model-value="
+                                    (modelValue[field.name] as string) ?? ''
+                                "
                                 type="url"
-                                :placeholder="field.placeholder ?? `https://example.com/${field.name}`"
-                                :class="{ 'border-destructive': errors[field.name] }"
-                                @update:model-value="updateField(field.name, $event)"
+                                :placeholder="
+                                    field.placeholder ??
+                                    `https://example.com/${field.name}`
+                                "
+                                :class="{
+                                    'border-destructive': errors[field.name],
+                                }"
+                                @update:model-value="
+                                    updateField(field.name, $event)
+                                "
                             />
                         </template>
 
@@ -106,16 +140,30 @@ const getSelectOptions = (field: FieldDefinition): SelectOption[] => field.optio
                         <template v-else-if="field.type === 'textarea'">
                             <Label :for="field.name">
                                 {{ field.label }}
-                                <span v-if="field.required" class="text-destructive">*</span>
+                                <span
+                                    v-if="field.required"
+                                    class="text-destructive"
+                                    >*</span
+                                >
                             </Label>
                             <textarea
                                 :id="field.name"
-                                :value="(modelValue[field.name] as string) ?? ''"
+                                :value="
+                                    (modelValue[field.name] as string) ?? ''
+                                "
                                 rows="3"
                                 :placeholder="`Enter ${field.label.toLowerCase()}...`"
                                 class="flex w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-                                :class="{ 'border-destructive': errors[field.name] }"
-                                @input="updateField(field.name, ($event.target as HTMLTextAreaElement).value)"
+                                :class="{
+                                    'border-destructive': errors[field.name],
+                                }"
+                                @input="
+                                    updateField(
+                                        field.name,
+                                        ($event.target as HTMLTextAreaElement)
+                                            .value,
+                                    )
+                                "
                             ></textarea>
                         </template>
 
@@ -123,16 +171,30 @@ const getSelectOptions = (field: FieldDefinition): SelectOption[] => field.optio
                         <template v-else-if="field.type === 'richtext'">
                             <Label :for="field.name">
                                 {{ field.label }}
-                                <span v-if="field.required" class="text-destructive">*</span>
+                                <span
+                                    v-if="field.required"
+                                    class="text-destructive"
+                                    >*</span
+                                >
                             </Label>
                             <textarea
                                 :id="field.name"
-                                :value="(modelValue[field.name] as string) ?? ''"
+                                :value="
+                                    (modelValue[field.name] as string) ?? ''
+                                "
                                 rows="10"
                                 :placeholder="`Enter ${field.label.toLowerCase()}...`"
                                 class="flex w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-                                :class="{ 'border-destructive': errors[field.name] }"
-                                @input="updateField(field.name, ($event.target as HTMLTextAreaElement).value)"
+                                :class="{
+                                    'border-destructive': errors[field.name],
+                                }"
+                                @input="
+                                    updateField(
+                                        field.name,
+                                        ($event.target as HTMLTextAreaElement)
+                                            .value,
+                                    )
+                                "
                             ></textarea>
                         </template>
 
@@ -140,14 +202,24 @@ const getSelectOptions = (field: FieldDefinition): SelectOption[] => field.optio
                         <template v-else-if="field.type === 'datetime'">
                             <Label :for="field.name">
                                 {{ field.label }}
-                                <span v-if="field.required" class="text-destructive">*</span>
+                                <span
+                                    v-if="field.required"
+                                    class="text-destructive"
+                                    >*</span
+                                >
                             </Label>
                             <Input
                                 :id="field.name"
-                                :model-value="(modelValue[field.name] as string) ?? ''"
+                                :model-value="
+                                    (modelValue[field.name] as string) ?? ''
+                                "
                                 type="datetime-local"
-                                :class="{ 'border-destructive': errors[field.name] }"
-                                @update:model-value="updateField(field.name, $event)"
+                                :class="{
+                                    'border-destructive': errors[field.name],
+                                }"
+                                @update:model-value="
+                                    updateField(field.name, $event)
+                                "
                             />
                         </template>
 
@@ -156,8 +228,13 @@ const getSelectOptions = (field: FieldDefinition): SelectOption[] => field.optio
                             <div class="flex items-center gap-2">
                                 <Checkbox
                                     :id="field.name"
-                                    :checked="(modelValue[field.name] as boolean) ?? false"
-                                    @update:checked="updateField(field.name, $event)"
+                                    :checked="
+                                        (modelValue[field.name] as boolean) ??
+                                        false
+                                    "
+                                    @update:checked="
+                                        updateField(field.name, $event)
+                                    "
                                 />
                                 <Label :for="field.name" class="cursor-pointer">
                                     {{ field.label }}
@@ -169,25 +246,47 @@ const getSelectOptions = (field: FieldDefinition): SelectOption[] => field.optio
                         <template v-else-if="field.type === 'belongs-to'">
                             <Label :for="field.name">
                                 {{ field.label }}
-                                <span v-if="field.required" class="text-destructive">*</span>
+                                <span
+                                    v-if="field.required"
+                                    class="text-destructive"
+                                    >*</span
+                                >
                             </Label>
                             <Select
-                                :model-value="(modelValue[field.name] as string | number | undefined)"
-                                @update:model-value="updateField(field.name, $event)"
+                                :model-value="
+                                    modelValue[field.name] as
+                                        | string
+                                        | number
+                                        | undefined
+                                "
+                                @update:model-value="
+                                    updateField(field.name, $event)
+                                "
                             >
                                 <SelectTrigger
                                     :id="field.name"
-                                    :class="{ 'border-destructive': errors[field.name] }"
+                                    :class="{
+                                        'border-destructive':
+                                            errors[field.name],
+                                    }"
                                 >
-                                    <SelectValue :placeholder="`Select ${field.label.toLowerCase()}`" />
+                                    <SelectValue
+                                        :placeholder="`Select ${field.label.toLowerCase()}`"
+                                    />
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectItem
-                                        v-for="option in getRelationOptions(field)"
+                                        v-for="option in getRelationOptions(
+                                            field,
+                                        )"
                                         :key="option.id"
                                         :value="option.id"
                                     >
-                                        {{ option[field.display_field ?? 'name'] }}
+                                        {{
+                                            option[
+                                                field.display_field ?? 'name'
+                                            ]
+                                        }}
                                     </SelectItem>
                                 </SelectContent>
                             </Select>
@@ -197,14 +296,22 @@ const getSelectOptions = (field: FieldDefinition): SelectOption[] => field.optio
                         <template v-else-if="field.type === 'belongs-to-many'">
                             <Label>
                                 {{ field.label }}
-                                <span v-if="field.required" class="text-destructive">*</span>
+                                <span
+                                    v-if="field.required"
+                                    class="text-destructive"
+                                    >*</span
+                                >
                             </Label>
                             <TagMultiSelect
-                                :model-value="(modelValue[field.name] as number[]) ?? []"
+                                :model-value="
+                                    (modelValue[field.name] as number[]) ?? []
+                                "
                                 :options="getRelationOptions(field)"
                                 :display-field="field.display_field ?? 'name'"
                                 :placeholder="`Search ${field.label.toLowerCase()}...`"
-                                @update:model-value="updateField(field.name, $event)"
+                                @update:model-value="
+                                    updateField(field.name, $event)
+                                "
                             />
                         </template>
 
@@ -212,17 +319,33 @@ const getSelectOptions = (field: FieldDefinition): SelectOption[] => field.optio
                         <template v-else-if="field.type === 'select'">
                             <Label :for="field.name">
                                 {{ field.label }}
-                                <span v-if="field.required" class="text-destructive">*</span>
+                                <span
+                                    v-if="field.required"
+                                    class="text-destructive"
+                                    >*</span
+                                >
                             </Label>
                             <Select
-                                :model-value="(modelValue[field.name] as string | number | undefined)"
-                                @update:model-value="updateField(field.name, $event)"
+                                :model-value="
+                                    modelValue[field.name] as
+                                        | string
+                                        | number
+                                        | undefined
+                                "
+                                @update:model-value="
+                                    updateField(field.name, $event)
+                                "
                             >
                                 <SelectTrigger
                                     :id="field.name"
-                                    :class="{ 'border-destructive': errors[field.name] }"
+                                    :class="{
+                                        'border-destructive':
+                                            errors[field.name],
+                                    }"
                                 >
-                                    <SelectValue :placeholder="`Select ${field.label.toLowerCase()}`" />
+                                    <SelectValue
+                                        :placeholder="`Select ${field.label.toLowerCase()}`"
+                                    />
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectItem
@@ -238,7 +361,9 @@ const getSelectOptions = (field: FieldDefinition): SelectOption[] => field.optio
 
                         <!-- Error message -->
                         <p
-                            v-if="errors[field.name] && field.type !== 'checkbox'"
+                            v-if="
+                                errors[field.name] && field.type !== 'checkbox'
+                            "
                             class="text-sm text-destructive"
                         >
                             {{ errors[field.name] }}

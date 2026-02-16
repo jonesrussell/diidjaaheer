@@ -86,14 +86,10 @@ const footerCommunity = [
                     </template>
                     <template v-else>
                         <Link :href="login()" class="hidden lg:inline-flex">
-                            <Button variant="ghost" size="sm">
-                                Log in
-                            </Button>
+                            <Button variant="ghost" size="sm"> Log in </Button>
                         </Link>
                         <Link :href="register()" class="hidden lg:inline-flex">
-                            <Button size="sm">
-                                Register
-                            </Button>
+                            <Button size="sm"> Register </Button>
                         </Link>
                     </template>
 
@@ -157,10 +153,7 @@ const footerCommunity = [
                                         :href="register()"
                                         @click="mobileOpen = false"
                                     >
-                                        <Button
-                                            size="sm"
-                                            class="w-full"
-                                        >
+                                        <Button size="sm" class="w-full">
                                             Register
                                         </Button>
                                     </Link>
@@ -179,9 +172,7 @@ const footerCommunity = [
 
         <!-- Footer -->
         <footer class="border-t-2 border-primary bg-foreground text-background">
-            <div
-                class="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8"
-            >
+            <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
                 <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
                     <!-- Col 1: Brand -->
                     <div>
@@ -196,16 +187,11 @@ const footerCommunity = [
 
                     <!-- Col 2: Explore -->
                     <div>
-                        <h3
-                            class="mb-3 font-medium text-background/90"
-                        >
+                        <h3 class="mb-3 font-medium text-background/90">
                             Explore
                         </h3>
                         <ul class="space-y-2">
-                            <li
-                                v-for="link in footerExplore"
-                                :key="link.href"
-                            >
+                            <li v-for="link in footerExplore" :key="link.href">
                                 <a
                                     :href="link.href"
                                     class="text-sm text-background/70 transition-colors hover:text-background"
@@ -218,9 +204,7 @@ const footerCommunity = [
 
                     <!-- Col 3: Community -->
                     <div>
-                        <h3
-                            class="mb-3 font-medium text-background/90"
-                        >
+                        <h3 class="mb-3 font-medium text-background/90">
                             Community
                         </h3>
                         <ul class="space-y-2">
