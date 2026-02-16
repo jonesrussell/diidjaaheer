@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
+import { Menu } from 'lucide-vue-next';
 import { ref } from 'vue';
-import { dashboard, login, register } from '@/routes';
 import { Button } from '@/components/ui/button';
 import {
     Sheet,
@@ -10,7 +10,7 @@ import {
     SheetTitle,
     SheetTrigger,
 } from '@/components/ui/sheet';
-import { Menu } from 'lucide-vue-next';
+import { dashboard, login, register } from '@/routes';
 
 type Props = {
     title?: string;

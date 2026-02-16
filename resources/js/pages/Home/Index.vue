@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { BookOpen, ExternalLink, Globe, History, Languages, MapPin } from 'lucide-vue-next';
+import { Badge } from '@/components/ui/badge';
 import {
     Card,
     CardContent,
@@ -6,9 +8,7 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import PublicLayout from '@/layouts/PublicLayout.vue';
-import { BookOpen, ExternalLink, Globe, History, Languages, MapPin } from 'lucide-vue-next';
 
 interface NewsItem {
     title?: string;

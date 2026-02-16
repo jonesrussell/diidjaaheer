@@ -1,0 +1,100 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project Overview
+
+Diidjaaheer ("Drumbeat") is an Indigenous cultural knowledge platform built with Laravel 12 + Vue 3 + Inertia.js 2. It aggregates articles from NorthCloud via Redis pub/sub and features events, teachings, community groups, and media content.
+
+**Live site:** diidjaaheer.live
+
+## Commands
+
+### Development
+```bash
+composer setup          # Full setup: install deps, generate key, migrate, build
+composer dev            # Run all dev services concurrently (server, queue, logs, vite)
+composer dev:ssr        # Same but with Inertia SSR enabled
+```
+
+### Linting & Formatting
+```bash
+composer lint           # Fix PHP (Pint, Laravel preset)
+composer test:lint      # Check PHP lint without fixing
+npm run lint            # Fix frontend (ESLint)
+npm run lint:check      # Check frontend lint without fixing
+npm run format          # Fix formatting (Prettier)
+npm run format:check    # Check formatting
+npm run type-check      # TypeScript type checking (vue-tsc)
+```
+
+### Testing
+```bash
+composer test                        # Full backend: lint + Pest
+php artisan test                     # Pest only
+php artisan test --filter=ExampleTest  # Single test
+npm run test                         # Frontend: Vitest
+```
+
+### Wayfinder (type-safe routes)
+```bash
+php artisan wayfinder:generate --with-form  # Regenerate route helpers
+```
+
+## Architecture
+
+### Stack
+- **Backend:** Laravel 12, PHP 8.2+, SQLite (dev), Pest 4 for testing
+- **Frontend:** Vue 3 (Composition API, `<script setup lang="ts">`), TypeScript, Vite 7
+- **Rendering:** Inertia.js 2 with SSR support
+- **UI:** shadcn-vue (New York v4 style, Reka UI based) + Tailwind CSS 4
+- **Auth:** Laravel Fortify with 2FA support
+- **Icons:** lucide-vue-next
+
+### Request Flow
+1. Routes in `routes/web.php` (settings split into `routes/settings.php`)
+2. Controllers return `Inertia::render('PageName', [...props])`
+3. `HandleInertiaRequests` middleware shares auth user, app name, sidebar state
+4. Vue pages in `resources/js/pages/` receive props and render in layout components
+
+### Frontend Structure
+- `resources/js/pages/` — Inertia page components (Home/, auth/, settings/, dashboard/)
+- `resources/js/layouts/` — Layout components (PublicLayout, AppLayout, AuthLayout, AdminLayout)
+- `resources/js/components/ui/` — shadcn-vue primitives (auto-generated, ESLint-ignored)
+- `resources/js/components/` — App-level components
+- `resources/js/composables/` — Vue composables (e.g., `useAppearance`)
+- `resources/js/routes/` — Wayfinder-generated type-safe route helpers
+- `resources/js/actions/` — Wayfinder-generated form actions
+- `resources/js/types/` — TypeScript type definitions
+
+### Path Alias
+`@/` resolves to `resources/js/` — use it for all frontend imports.
+
+### NorthCloud Integration
+Articles are consumed from a NorthCloud instance via Redis pub/sub (`jonesrussell/northcloud-laravel` package). Config in `config/northcloud.php`. A systemd service (`diidjaaheer-articles-subscribe`) runs the subscriber in production.
+
+## Code Conventions
+
+### PHP
+- `declare(strict_types=1)` in all PHP files
+- Pint with `laravel` preset
+- Single-action (invokable) controllers where appropriate
+- Fillable mass assignment whitelisting on models
+
+### Frontend
+- ESLint enforces `import/order` (groups: builtin > external > internal > parent > sibling > index, alphabetical within groups) and `consistent-type-imports` (separate `type` imports)
+- Prettier with Tailwind class sorting (`prettier-plugin-tailwindcss`) — 4-space indent, single quotes, semicolons
+- `@typescript-eslint/no-explicit-any` is off
+
+### Theme
+Custom design tokens via CSS variables in `resources/css/app.css`. Primary: burnt orange (`#c4622d`), sage green (`#5a7a5e`), accent gold (`#e8a917`). Dark mode via `.dark` class on root. Fonts: DM Serif Display (headings), Source Sans 3 (body).
+
+## CI/CD Pipeline
+
+Chained GitHub Actions workflows: **linter** → **tests** → **deploy**
+
+1. `linter` — PHP lint (Pint) + frontend lint (ESLint) on push/PR to main/develop
+2. `tests` — Runs only if linter passes. Frontend build + Vitest, then backend Pest on PHP 8.4/8.5
+3. `deploy` — Runs only if tests pass. Deployer 7 to coforge.xyz via SSH
+
+Deployment uses Caddy web server, systemd user services for SSR/scheduler/article-subscriber, and PHP-FPM 8.4.
