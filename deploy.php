@@ -19,6 +19,8 @@ add('writable_dirs', [
     'bootstrap/cache',
     'database',
 ]);
+set('http_user', 'www-data');
+set('writable_acl_groups', ['www-data']);
 
 // Hosts
 
