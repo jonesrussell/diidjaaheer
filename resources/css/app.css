@@ -89,32 +89,40 @@
     }
 }
 
+/* Anishinaabe-inspired palette: Four Directions (red, black, yellow, white) + cedar/birch */
 :root {
-    --background: hsl(0 0% 100%);
-    --foreground: hsl(0 0% 3.9%);
-    --card: hsl(0 0% 100%);
-    --card-foreground: hsl(0 0% 3.9%);
-    --popover: hsl(0 0% 100%);
-    --popover-foreground: hsl(0 0% 3.9%);
-    --primary: hsl(0 0% 9%);
-    --primary-foreground: hsl(0 0% 98%);
-    --secondary: hsl(0 0% 92.1%);
-    --secondary-foreground: hsl(0 0% 9%);
-    --muted: hsl(0 0% 96.1%);
-    --muted-foreground: hsl(0 0% 45.1%);
-    --accent: hsl(0 0% 96.1%);
-    --accent-foreground: hsl(0 0% 9%);
-    --destructive: hsl(0 84.2% 60.2%);
-    --destructive-foreground: hsl(0 0% 98%);
-    --border: hsl(0 0% 92.8%);
-    --input: hsl(0 0% 89.8%);
-    --ring: hsl(0 0% 3.9%);
-    --chart-1: hsl(12 76% 61%);
-    --chart-2: hsl(173 58% 39%);
-    --chart-3: hsl(197 37% 24%);
-    --chart-4: hsl(43 74% 66%);
-    --chart-5: hsl(27 87% 67%);
-    --radius: 0.5rem;
+    --color-anishinaabe-red: #b22222;
+    --color-anishinaabe-black: #1a1a1a;
+    --color-anishinaabe-yellow: #ffd700;
+    --color-anishinaabe-white: #fffef7;
+    --color-cedar: #8b7355;
+    --color-birch: #f5f5dc;
+
+    --background: hsl(40 33% 99%);
+    --foreground: var(--color-anishinaabe-black);
+    --card: var(--color-anishinaabe-white);
+    --card-foreground: var(--color-anishinaabe-black);
+    --popover: var(--color-anishinaabe-white);
+    --popover-foreground: var(--color-anishinaabe-black);
+    --primary: var(--color-anishinaabe-black);
+    --primary-foreground: var(--color-anishinaabe-white);
+    --secondary: hsl(40 33% 94%);
+    --secondary-foreground: var(--color-anishinaabe-black);
+    --muted: var(--color-birch);
+    --muted-foreground: var(--color-cedar);
+    --accent: hsl(0 70% 42%);
+    --accent-foreground: var(--color-anishinaabe-white);
+    --destructive: hsl(0 70% 42%);
+    --destructive-foreground: var(--color-anishinaabe-white);
+    --border: hsl(40 20% 88%);
+    --input: hsl(40 20% 90%);
+    --ring: var(--color-anishinaabe-red);
+    --chart-1: var(--color-anishinaabe-red);
+    --chart-2: var(--color-anishinaabe-yellow);
+    --chart-3: var(--color-cedar);
+    --chart-4: hsl(197 37% 24%);
+    --chart-5: hsl(173 58% 39%);
+    --radius: 0.75rem;
     --sidebar-background: hsl(0 0% 98%);
     --sidebar-foreground: hsl(240 5.3% 26.1%);
     --sidebar-primary: hsl(0 0% 10%);
@@ -127,25 +135,25 @@
 }
 
 .dark {
-    --background: hsl(0 0% 3.9%);
-    --foreground: hsl(0 0% 98%);
-    --card: hsl(0 0% 3.9%);
-    --card-foreground: hsl(0 0% 98%);
-    --popover: hsl(0 0% 3.9%);
-    --popover-foreground: hsl(0 0% 98%);
-    --primary: hsl(0 0% 98%);
-    --primary-foreground: hsl(0 0% 9%);
-    --secondary: hsl(0 0% 14.9%);
-    --secondary-foreground: hsl(0 0% 98%);
-    --muted: hsl(0 0% 16.08%);
-    --muted-foreground: hsl(0 0% 63.9%);
-    --accent: hsl(0 0% 14.9%);
-    --accent-foreground: hsl(0 0% 98%);
-    --destructive: hsl(0 84% 60%);
-    --destructive-foreground: hsl(0 0% 98%);
-    --border: hsl(0 0% 14.9%);
-    --input: hsl(0 0% 14.9%);
-    --ring: hsl(0 0% 83.1%);
+    --background: var(--color-anishinaabe-black);
+    --foreground: var(--color-anishinaabe-white);
+    --card: hsl(0 0% 8%);
+    --card-foreground: var(--color-anishinaabe-white);
+    --popover: hsl(0 0% 8%);
+    --popover-foreground: var(--color-anishinaabe-white);
+    --primary: var(--color-anishinaabe-yellow);
+    --primary-foreground: var(--color-anishinaabe-black);
+    --secondary: hsl(0 0% 14%);
+    --secondary-foreground: var(--color-anishinaabe-white);
+    --muted: hsl(0 0% 12%);
+    --muted-foreground: var(--color-cedar);
+    --accent: var(--color-anishinaabe-red);
+    --accent-foreground: var(--color-anishinaabe-white);
+    --destructive: hsl(0 70% 50%);
+    --destructive-foreground: var(--color-anishinaabe-white);
+    --border: hsl(0 0% 18%);
+    --input: hsl(0 0% 18%);
+    --ring: var(--color-anishinaabe-yellow);
     --chart-1: hsl(220 70% 50%);
     --chart-2: hsl(160 60% 45%);
     --chart-3: hsl(30 80% 55%);

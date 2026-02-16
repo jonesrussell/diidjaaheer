@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "edd0b1745d032a55b68e22b54e95d801",
+    "content-hash": "8b15de46cb005e4e7811ef85ee71caf1",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1226,6 +1226,60 @@
                 "source": "https://github.com/inertiajs/inertia-laravel/tree/v2.0.20"
             },
             "time": "2026-02-13T11:53:06+00:00"
+        },
+        {
+            "name": "jonesrussell/northcloud-laravel",
+            "version": "v0.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jonesrussell/northcloud-laravel.git",
+                "reference": "05a795797a87e55653d9ac06839841183b4a7285"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jonesrussell/northcloud-laravel/zipball/05a795797a87e55653d9ac06839841183b4a7285",
+                "reference": "05a795797a87e55653d9ac06839841183b4a7285",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-pcntl": "*",
+                "ext-redis": "*",
+                "illuminate/console": "^12.0",
+                "illuminate/database": "^12.0",
+                "illuminate/events": "^12.0",
+                "illuminate/support": "^12.0",
+                "php": "^8.4"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.24",
+                "orchestra/testbench": "^10.0",
+                "pestphp/pest": "^4.0",
+                "pestphp/pest-plugin-laravel": "^4.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "JonesRussell\\NorthCloud\\NorthCloudServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "JonesRussell\\NorthCloud\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Shared article ingestion pipeline for North Cloud-connected Laravel sites",
+            "support": {
+                "issues": "https://github.com/jonesrussell/northcloud-laravel/issues",
+                "source": "https://github.com/jonesrussell/northcloud-laravel/tree/v0.1.2"
+            },
+            "time": "2026-02-08T18:42:05+00:00"
         },
         {
             "name": "laravel/fortify",
@@ -10032,5 +10086,5 @@
         "php": "^8.2"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.6.0"
 }
