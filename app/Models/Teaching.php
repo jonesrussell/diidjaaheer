@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Teaching extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'title',
         'slug',
