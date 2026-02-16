@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
 import {
     Card,
     CardContent,
@@ -58,16 +57,14 @@ const placeholderEvents = [
 const teachingCards = [
     { title: 'Culture', description: 'Traditions, ceremonies, and the Anishinaabe way of life passed down through generations.', icon: 'BookOpen', borderColor: 'border-primary' },
     { title: 'History', description: 'The rich history of the Anishinaabe people across Turtle Island.', icon: 'History', borderColor: 'border-accent' },
-    { title: 'Language', description: 'Anishinaabemowin language resources and learning materials.', icon: 'Languages', borderColor: 'border-[#5a7a5e] dark:border-[#6b9470]' },
+    { title: 'Language', description: 'Anishinaabemowin language resources and learning materials.', icon: 'Languages', borderColor: 'border-sage' },
 ];
 
-const sectionAccentColors = ['bg-primary', 'bg-accent', 'bg-[#5a7a5e] dark:bg-[#6b9470]'];
+const sectionAccentColors = ['bg-primary', 'bg-accent', 'bg-sage'];
 </script>
 
 <template>
     <PublicLayout title="Diidjaaheer — Anishinaabe News, Culture & Community">
-        <Head title="Diidjaaheer — Anishinaabe News, Culture & Community" />
-
         <!-- Hero Section -->
         <section class="noise-texture overflow-hidden py-16 sm:py-20 md:py-28">
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
@@ -84,10 +81,10 @@ const sectionAccentColors = ['bg-primary', 'bg-accent', 'bg-[#5a7a5e] dark:bg-[#
                 <div class="mt-8 flex flex-wrap items-center justify-center gap-2 animate-fade-in-up" style="animation-delay: 0.65s">
                     <a v-for="pill in [
                         { label: 'News', href: '#news', color: 'bg-primary/10 text-primary hover:bg-primary/20' },
-                        { label: 'Powwows', href: '#events', color: 'bg-accent/10 text-accent-foreground hover:bg-accent/20' },
+                        { label: 'Powwows', href: '#events', color: 'bg-accent/10 text-accent hover:bg-accent/20' },
                         { label: 'Teachings', href: '#teachings', color: 'bg-primary/10 text-primary hover:bg-primary/20' },
-                        { label: 'Community', href: '#community', color: 'bg-[#5a7a5e]/10 text-[#5a7a5e] dark:text-[#6b9470] hover:bg-[#5a7a5e]/20' },
-                        { label: 'Language', href: '#language', color: 'bg-[#5a7a5e]/10 text-[#5a7a5e] dark:text-[#6b9470] hover:bg-[#5a7a5e]/20' },
+                        { label: 'Community', href: '#community', color: 'bg-sage/10 text-sage hover:bg-sage/20' },
+                        { label: 'Language', href: '#language', color: 'bg-sage/10 text-sage hover:bg-sage/20' },
                     ]" :key="pill.label" :href="pill.href"
                        :class="['inline-flex items-center rounded-full px-4 py-1.5 text-sm font-medium transition-colors', pill.color]">
                         {{ pill.label }}
@@ -113,7 +110,7 @@ const sectionAccentColors = ['bg-primary', 'bg-accent', 'bg-[#5a7a5e] dark:bg-[#
                             <div class="absolute inset-0" :class="[
                                 i === 0 ? 'bg-gradient-to-br from-primary/30 via-accent/20 to-primary/10' :
                                 i === 1 ? 'bg-gradient-to-br from-accent/25 via-primary/15 to-accent/10' :
-                                'bg-gradient-to-br from-[#5a7a5e]/25 via-accent/15 to-primary/10'
+                                'bg-gradient-to-br from-sage/25 via-accent/15 to-primary/10'
                             ]" />
                         </div>
                         <CardHeader>
@@ -176,8 +173,8 @@ const sectionAccentColors = ['bg-primary', 'bg-accent', 'bg-[#5a7a5e] dark:bg-[#
                         <CardHeader>
                             <div :class="['mb-3 flex size-12 items-center justify-center rounded-full', sectionAccentColors[i] + '/10']">
                                 <BookOpen v-if="card.icon === 'BookOpen'" class="size-6 text-primary" />
-                                <History v-if="card.icon === 'History'" class="size-6 text-accent-foreground" />
-                                <Languages v-if="card.icon === 'Languages'" class="size-6 text-[#5a7a5e] dark:text-[#6b9470]" />
+                                <History v-if="card.icon === 'History'" class="size-6 text-accent" />
+                                <Languages v-if="card.icon === 'Languages'" class="size-6 text-sage" />
                             </div>
                             <CardTitle class="font-serif text-xl">{{ card.title }}</CardTitle>
                             <CardDescription>{{ card.description }}</CardDescription>
@@ -191,7 +188,7 @@ const sectionAccentColors = ['bg-primary', 'bg-accent', 'bg-[#5a7a5e] dark:bg-[#
         <section id="community" class="bg-secondary/50 py-16 sm:py-20">
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center gap-3 animate-slide-in-left">
-                    <div class="h-8 w-1 rounded-full bg-[#5a7a5e] dark:bg-[#6b9470]" />
+                    <div class="h-8 w-1 rounded-full bg-sage" />
                     <h2 class="font-serif text-3xl sm:text-4xl">Community Groups</h2>
                 </div>
                 <p class="mt-3 text-muted-foreground">Online and offline Anishinaabe community organizations and groups.</p>
@@ -200,7 +197,7 @@ const sectionAccentColors = ['bg-primary', 'bg-accent', 'bg-[#5a7a5e] dark:bg-[#
                         { name: 'Anishinaabe Cultural Network', type: 'Cultural', region: 'Great Lakes', url: '#' },
                         { name: 'Ojibwe Language Society', type: 'Language', region: 'Ontario / Manitoba', url: '#' },
                     ])" :key="i"
-                          class="border-l-4 border-l-[#5a7a5e] dark:border-l-[#6b9470] transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                          class="border-l-4 border-l-sage transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
                         <CardHeader>
                             <div class="flex items-start justify-between">
                                 <div>
@@ -225,14 +222,14 @@ const sectionAccentColors = ['bg-primary', 'bg-accent', 'bg-[#5a7a5e] dark:bg-[#
         <section id="language" class="py-16 sm:py-20">
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center gap-3 animate-slide-in-left">
-                    <div class="h-8 w-1 rounded-full bg-[#5a7a5e] dark:bg-[#6b9470]" />
+                    <div class="h-8 w-1 rounded-full bg-sage" />
                     <h2 class="font-serif text-3xl sm:text-4xl">Language Resources</h2>
                 </div>
-                <Card class="mt-8 bg-[#5a7a5e]/10 dark:bg-[#6b9470]/10 border-[#5a7a5e]/20 dark:border-[#6b9470]/20">
+                <Card class="mt-8 bg-sage/10 border-sage/20">
                     <CardHeader>
                         <div class="flex items-center gap-3">
-                            <div class="flex size-12 items-center justify-center rounded-full bg-[#5a7a5e]/10 dark:bg-[#6b9470]/10">
-                                <Globe class="size-6 text-[#5a7a5e] dark:text-[#6b9470]" />
+                            <div class="flex size-12 items-center justify-center rounded-full bg-sage/10">
+                                <Globe class="size-6 text-sage" />
                             </div>
                             <div>
                                 <CardTitle class="font-serif text-xl">Ojibwe / Anishinaabemowin</CardTitle>
