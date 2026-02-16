@@ -252,23 +252,14 @@ const getSelectOptions = (field: FieldDefinition): SelectOption[] =>
                                     >*</span
                                 >
                             </Label>
+                            <!-- prettier-ignore -->
                             <Select
-                                :model-value="
-                                    modelValue[field.name] as
-                                        | string
-                                        | number
-                                        | undefined
-                                "
-                                @update:model-value="
-                                    updateField(field.name, $event)
-                                "
+                                :model-value="(modelValue[field.name] as string | number | undefined)"
+                                @update:model-value="updateField(field.name, $event)"
                             >
                                 <SelectTrigger
                                     :id="field.name"
-                                    :class="{
-                                        'border-destructive':
-                                            errors[field.name],
-                                    }"
+                                    :class="{ 'border-destructive': errors[field.name] }"
                                 >
                                     <SelectValue
                                         :placeholder="`Select ${field.label.toLowerCase()}`"
@@ -325,23 +316,14 @@ const getSelectOptions = (field: FieldDefinition): SelectOption[] =>
                                     >*</span
                                 >
                             </Label>
+                            <!-- prettier-ignore -->
                             <Select
-                                :model-value="
-                                    modelValue[field.name] as
-                                        | string
-                                        | number
-                                        | undefined
-                                "
-                                @update:model-value="
-                                    updateField(field.name, $event)
-                                "
+                                :model-value="(modelValue[field.name] as string | number | undefined)"
+                                @update:model-value="updateField(field.name, $event)"
                             >
                                 <SelectTrigger
                                     :id="field.name"
-                                    :class="{
-                                        'border-destructive':
-                                            errors[field.name],
-                                    }"
+                                    :class="{ 'border-destructive': errors[field.name] }"
                                 >
                                     <SelectValue
                                         :placeholder="`Select ${field.label.toLowerCase()}`"
