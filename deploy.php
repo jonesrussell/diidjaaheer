@@ -30,6 +30,12 @@ host('diidjaaheer.live')
 
 // Tasks
 
+task('deploy:ensure_shared_database', function (): void {
+    run('mkdir -p {{deploy_path}}/shared/database');
+    run('touch {{deploy_path}}/shared/database/database.sqlite');
+});
+after('deploy:shared', 'deploy:ensure_shared_database');
+
 task('deploy:build_assets', function (): void {
     run('bash -lc "source ~/.nvm/nvm.sh 2>/dev/null; cd {{release_path}} && npm ci && npm run build:ssr"');
 });
@@ -45,8 +51,8 @@ task('deploy:install_services', function (): void {
     $serviceDir = '~/.config/systemd/user';
     run("mkdir -p $serviceDir");
     run("cp {{release_path}}/deploy/systemd-user/*.service $serviceDir/");
-    run('systemctl --user daemon-reload');
-    run('systemctl --user enable diidjaaheer-inertia-ssr.service diidjaaheer-schedule-work.service diidjaaheer-articles-subscribe.service');
+    run('systemctl --user daemon-reload || true');
+    run('systemctl --user enable diidjaaheer-inertia-ssr.service diidjaaheer-schedule-work.service diidjaaheer-articles-subscribe.service || true');
 });
 before('deploy:symlink', 'deploy:install_services');
 
@@ -62,7 +68,7 @@ after('deploy:copy_caddyfile', 'deploy:reload_caddy');
 
 task('deploy:restart_services', function (): void {
     run('cd {{release_path}} && {{bin/php}} artisan inertia:stop-ssr || true');
-    run('systemctl --user restart diidjaaheer-schedule-work.service diidjaaheer-inertia-ssr.service diidjaaheer-articles-subscribe.service || true');
+    run('systemctl --user restart diidjaaheer-schedule-work.service diidjaaheer-inertia-ssr.service diidjaaheer-articles-subscribe.service 2>/dev/null || true');
 });
 after('deploy:symlink', 'deploy:restart_services');
 
