@@ -35,6 +35,12 @@ jobs:
         env:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
 
+      - name: Download Deployer
+        run: |
+          curl -LO https://deployer.org/deployer.phar
+          chmod +x deployer.phar
+          sudo mv deployer.phar /usr/local/bin/dep
+
       - name: Setup SSH
         run: |
           eval "$(ssh-agent -s)"
@@ -65,4 +71,4 @@ jobs:
           DEPLOY_ENV: production
         run: |
           set -e
-          vendor/bin/dep deploy coforge.xyz -v
+          dep deploy coforge.xyz -v
