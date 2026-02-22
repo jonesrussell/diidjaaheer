@@ -56,13 +56,23 @@ task('deploy:install_services', function (): void {
 });
 before('deploy:symlink', 'deploy:install_services');
 
+task('deploy:ensure_log_dir', function (): void {
+    run('mkdir -p {{deploy_path}}/log');
+    run('sudo chgrp caddy {{deploy_path}}/log 2>/dev/null || true');
+    run('chmod g+w {{deploy_path}}/log 2>/dev/null || true');
+});
+before('deploy:copy_caddyfile', 'deploy:ensure_log_dir');
+
 task('deploy:copy_caddyfile', function (): void {
     run('cp {{release_path}}/Caddyfile {{deploy_path}}/Caddyfile');
 });
 after('deploy:symlink', 'deploy:copy_caddyfile');
 
 task('deploy:reload_caddy', function (): void {
-    run('sudo systemctl reload caddy || true');
+    $output = run('sudo systemctl reload caddy 2>&1; echo "CADDY_RELOAD_EXIT=$?"', ['no_throw' => true]);
+    if (!str_contains($output, 'CADDY_RELOAD_EXIT=0')) {
+        warning('Caddy reload failed on server. Deploy continued but the new Caddyfile may not be active. Fix on server: systemctl status caddy; journalctl -xeu caddy.service');
+    }
 });
 after('deploy:copy_caddyfile', 'deploy:reload_caddy');
 
