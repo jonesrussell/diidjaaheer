@@ -9,7 +9,15 @@ return [
         'connection' => env('NORTHCLOUD_REDIS_CONNECTION', 'northcloud'),
         'channels' => array_filter(array_map(
             'trim',
-            explode(',', env('NORTHCLOUD_CHANNELS', 'articles:default'))
+            explode(',', env('NORTHCLOUD_CHANNELS', implode(',', [
+                // Layer 7: Anishinaabe (publisher does not emit articles:default)
+                'articles:anishinaabe',
+                'anishinaabe:category:culture',
+                'anishinaabe:category:language',
+                'anishinaabe:category:governance',
+                'anishinaabe:category:land-rights',
+                'anishinaabe:category:education',
+            ])))
         )),
     ],
 
