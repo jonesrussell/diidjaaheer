@@ -63,7 +63,7 @@ after('deploy:symlink', 'deploy:copy_caddyfile');
 
 task('deploy:reload_caddy', function (): void {
     $output = run('sudo systemctl reload caddy 2>&1; echo "CADDY_RELOAD_EXIT=$?"', ['no_throw' => true]);
-    if (!str_contains($output, 'CADDY_RELOAD_EXIT=0')) {
+    if (! str_contains($output, 'CADDY_RELOAD_EXIT=0')) {
         warning('Caddy reload failed on server. Deploy continued but the new Caddyfile may not be active. Fix on server: systemctl status caddy; journalctl -xeu caddy.service');
     }
 });
