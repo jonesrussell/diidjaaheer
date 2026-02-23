@@ -73,7 +73,7 @@ diidjaaheer.live {
   }
 
   log {
-    output file /home/deployer/diidjaaheer.live/log/access.log {
+    output file /var/log/caddy/diidjaaheer.live.access.log {
       mode 0644
     }
   }

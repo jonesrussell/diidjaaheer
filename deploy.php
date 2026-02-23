@@ -56,13 +56,6 @@ task('deploy:install_services', function (): void {
 });
 before('deploy:symlink', 'deploy:install_services');
 
-task('deploy:ensure_log_dir', function (): void {
-    run('mkdir -p {{deploy_path}}/log');
-    run('sudo chgrp caddy {{deploy_path}}/log 2>/dev/null || true');
-    run('chmod g+w {{deploy_path}}/log 2>/dev/null || true');
-});
-before('deploy:copy_caddyfile', 'deploy:ensure_log_dir');
-
 task('deploy:copy_caddyfile', function (): void {
     run('cp {{release_path}}/Caddyfile {{deploy_path}}/Caddyfile');
 });
