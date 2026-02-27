@@ -1,0 +1,18 @@
+[Unit]
+Description=Diidjaaheer Horizon
+After=network.target
+ConditionPathExists=/home/deployer/diidjaaheer.live/current
+
+[Service]
+Type=simple
+WorkingDirectory=/home/deployer/diidjaaheer.live/current
+ExecStart=/usr/bin/php artisan horizon
+Restart=always
+RestartSec=3
+TimeoutStopSec=90
+KillMode=mixed
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target
