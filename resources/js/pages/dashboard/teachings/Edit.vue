@@ -23,7 +23,9 @@ interface Props {
         slug: string;
         type: string;
         content: string;
+        cultural_group_id: number | null;
     };
+    culturalGroups: Array<{ id: number; name: string }>;
 }
 
 const props = defineProps<Props>();
@@ -40,13 +42,19 @@ const form = useForm({
     slug: props.teaching.slug,
     type: props.teaching.type,
     content: props.teaching.content,
+    cultural_group_id: props.teaching.cultural_group_id
+        ? String(props.teaching.cultural_group_id)
+        : '',
 });
 
 const deleteDialogOpen = ref(false);
 const isDeleting = ref(false);
 
 const submit = () => {
-    form.put(`${routePrefix}/${props.teaching.id}`);
+    form.transform((data) => ({
+        ...data,
+        cultural_group_id: data.cultural_group_id || null,
+    })).put(`${routePrefix}/${props.teaching.id}`);
 };
 
 const confirmDelete = () => {
@@ -127,6 +135,32 @@ const confirmDelete = () => {
                     </Select>
                     <p v-if="form.errors.type" class="text-sm text-destructive">
                         {{ form.errors.type }}
+                    </p>
+                </div>
+
+                <div class="space-y-2">
+                    <Label for="cultural_group_id">Cultural Group</Label>
+                    <Select v-model="form.cultural_group_id">
+                        <SelectTrigger>
+                            <SelectValue
+                                placeholder="No cultural group"
+                            />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem
+                                v-for="group in culturalGroups"
+                                :key="group.id"
+                                :value="String(group.id)"
+                            >
+                                {{ group.name }}
+                            </SelectItem>
+                        </SelectContent>
+                    </Select>
+                    <p
+                        v-if="form.errors.cultural_group_id"
+                        class="text-sm text-destructive"
+                    >
+                        {{ form.errors.cultural_group_id }}
                     </p>
                 </div>
 

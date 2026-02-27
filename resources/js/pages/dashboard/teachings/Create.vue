@@ -15,6 +15,12 @@ import {
 } from '@/components/ui/select';
 import AppLayout from '@/layouts/AppLayout.vue';
 
+interface Props {
+    culturalGroups: Array<{ id: number; name: string }>;
+}
+
+defineProps<Props>();
+
 const routePrefix = '/dashboard/teachings';
 const breadcrumbs = [
     { title: 'Dashboard', href: '/dashboard' },
@@ -27,6 +33,7 @@ const form = useForm({
     slug: '',
     type: '',
     content: '',
+    cultural_group_id: '',
 });
 
 const slugify = (text: string) =>
@@ -44,7 +51,10 @@ watch(
 );
 
 const submit = () => {
-    form.post(routePrefix);
+    form.transform((data) => ({
+        ...data,
+        cultural_group_id: data.cultural_group_id || null,
+    })).post(routePrefix);
 };
 </script>
 
@@ -118,6 +128,32 @@ const submit = () => {
                     </Select>
                     <p v-if="form.errors.type" class="text-sm text-destructive">
                         {{ form.errors.type }}
+                    </p>
+                </div>
+
+                <div class="space-y-2">
+                    <Label for="cultural_group_id">Cultural Group</Label>
+                    <Select v-model="form.cultural_group_id">
+                        <SelectTrigger>
+                            <SelectValue
+                                placeholder="No cultural group"
+                            />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem
+                                v-for="group in culturalGroups"
+                                :key="group.id"
+                                :value="String(group.id)"
+                            >
+                                {{ group.name }}
+                            </SelectItem>
+                        </SelectContent>
+                    </Select>
+                    <p
+                        v-if="form.errors.cultural_group_id"
+                        class="text-sm text-destructive"
+                    >
+                        {{ form.errors.cultural_group_id }}
                     </p>
                 </div>
 

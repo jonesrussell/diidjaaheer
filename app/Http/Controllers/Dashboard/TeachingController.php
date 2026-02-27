@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\CulturalGroup;
 use App\Models\Teaching;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,6 +17,7 @@ class TeachingController extends Controller
     public function index(Request $request): Response
     {
         $teachings = Teaching::query()
+            ->with('culturalGroup:id,name')
             ->when($request->search, fn ($q) => $q->where('title', 'like', "%{$request->search}%"))
             ->when($request->type, fn ($q) => $q->where('type', $request->type))
             ->orderBy('title')
@@ -36,7 +38,9 @@ class TeachingController extends Controller
 
     public function create(): Response
     {
-        return Inertia::render('dashboard/teachings/Create');
+        return Inertia::render('dashboard/teachings/Create', [
+            'culturalGroups' => CulturalGroup::select('id', 'name')->orderBy('name')->get(),
+        ]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -46,6 +50,7 @@ class TeachingController extends Controller
             'slug' => 'required|string|max:255|unique:teachings',
             'type' => 'required|in:culture,history,language',
             'content' => 'required|string',
+            'cultural_group_id' => 'nullable|exists:cultural_groups,id',
         ]);
 
         Teaching::create($validated);
@@ -57,6 +62,7 @@ class TeachingController extends Controller
     {
         return Inertia::render('dashboard/teachings/Edit', [
             'teaching' => $teaching,
+            'culturalGroups' => CulturalGroup::select('id', 'name')->orderBy('name')->get(),
         ]);
     }
 
@@ -67,6 +73,7 @@ class TeachingController extends Controller
             'slug' => 'required|string|max:255|unique:teachings,slug,'.$teaching->id,
             'type' => 'required|in:culture,history,language',
             'content' => 'required|string',
+            'cultural_group_id' => 'nullable|exists:cultural_groups,id',
         ]);
 
         $teaching->update($validated);

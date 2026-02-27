@@ -24,6 +24,7 @@ interface Teaching {
     slug: string;
     type: string;
     content: string;
+    cultural_group?: { id: number; name: string };
 }
 
 interface Props {
@@ -161,6 +162,9 @@ const goToPage = (url: string | null) => {
                                 Type
                             </th>
                             <th class="px-4 py-3 text-left text-sm font-medium">
+                                Cultural Group
+                            </th>
+                            <th class="px-4 py-3 text-left text-sm font-medium">
                                 Content
                             </th>
                             <th
@@ -183,6 +187,13 @@ const goToPage = (url: string | null) => {
                                 <Badge variant="secondary">{{
                                     teaching.type
                                 }}</Badge>
+                            </td>
+                            <td class="px-4 py-3 text-sm text-muted-foreground">
+                                {{
+                                    teaching.cultural_group?.name
+                                        ? teaching.cultural_group.name
+                                        : '\u2014'
+                                }}
                             </td>
                             <td class="px-4 py-3 text-sm text-muted-foreground">
                                 {{ truncate(teaching.content) }}
@@ -213,7 +224,7 @@ const goToPage = (url: string | null) => {
                         </tr>
                         <tr v-if="teachings.data.length === 0">
                             <td
-                                colspan="4"
+                                colspan="5"
                                 class="px-4 py-8 text-center text-muted-foreground"
                             >
                                 No teachings found.
