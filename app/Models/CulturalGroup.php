@@ -60,8 +60,9 @@ class CulturalGroup extends Model
     {
         $ancestors = new Collection;
         $current = $this->parent;
+        $maxDepth = 20;
 
-        while ($current !== null) {
+        while ($current !== null && $maxDepth-- > 0) {
             $ancestors->prepend($current);
             $current = $current->parent;
         }
