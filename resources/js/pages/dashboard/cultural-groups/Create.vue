@@ -100,10 +100,7 @@ const submit = () => {
                         v-model="form.name"
                         placeholder="Cultural group name"
                     />
-                    <p
-                        v-if="form.errors.name"
-                        class="text-sm text-destructive"
-                    >
+                    <p v-if="form.errors.name" class="text-sm text-destructive">
                         {{ form.errors.name }}
                     </p>
                 </div>
@@ -131,9 +128,7 @@ const submit = () => {
                             <SelectItem value="family">Family</SelectItem>
                             <SelectItem value="group">Group</SelectItem>
                             <SelectItem value="sub_group">Sub Group</SelectItem>
-                            <SelectItem value="community"
-                                >Community</SelectItem
-                            >
+                            <SelectItem value="community">Community</SelectItem>
                             <SelectItem value="clan">Clan</SelectItem>
                         </SelectContent>
                     </Select>

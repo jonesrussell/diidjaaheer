@@ -117,21 +117,13 @@ const goToPage = (url: string | null) => {
             <!-- Stats -->
             <div class="grid gap-4 md:grid-cols-4">
                 <StatCard label="Total" :value="stats.total" :icon="TreePine" />
-                <StatCard
-                    label="Root"
-                    :value="stats.root"
-                    :icon="TreePine"
-                />
+                <StatCard label="Root" :value="stats.root" :icon="TreePine" />
                 <StatCard
                     label="Family"
                     :value="stats.family"
                     :icon="TreePine"
                 />
-                <StatCard
-                    label="Group"
-                    :value="stats.group"
-                    :icon="TreePine"
-                />
+                <StatCard label="Group" :value="stats.group" :icon="TreePine" />
             </div>
 
             <!-- Search -->

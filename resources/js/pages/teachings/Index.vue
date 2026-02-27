@@ -5,12 +5,7 @@ import { computed, ref } from 'vue';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import {
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import PublicLayout from '@/layouts/PublicLayout.vue';
 
@@ -93,9 +88,7 @@ const typePillUrl = (value: string) => {
                 >
                     Teachings
                 </h1>
-                <div
-                    class="mx-auto mt-6 h-1 w-24 rounded-full bg-primary"
-                />
+                <div class="mx-auto mt-6 h-1 w-24 rounded-full bg-primary" />
                 <p
                     class="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground sm:text-xl"
                 >
@@ -183,9 +176,7 @@ const typePillUrl = (value: string) => {
                                         class="text-xs text-sage transition-colors hover:text-sage/80 hover:underline"
                                         @click.stop
                                     >
-                                        {{
-                                            teaching.cultural_group.name
-                                        }}
+                                        {{ teaching.cultural_group.name }}
                                     </Link>
                                 </div>
                             </CardHeader>
@@ -201,10 +192,7 @@ const typePillUrl = (value: string) => {
                 </div>
 
                 <!-- Empty state -->
-                <div
-                    v-else
-                    class="mt-8 text-center text-muted-foreground"
-                >
+                <div v-else class="mt-8 text-center text-muted-foreground">
                     <BookOpen
                         class="mx-auto mb-4 size-12 text-muted-foreground/50"
                     />

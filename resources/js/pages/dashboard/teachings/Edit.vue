@@ -142,9 +142,7 @@ const confirmDelete = () => {
                     <Label for="cultural_group_id">Cultural Group</Label>
                     <Select v-model="form.cultural_group_id">
                         <SelectTrigger>
-                            <SelectValue
-                                placeholder="No cultural group"
-                            />
+                            <SelectValue placeholder="No cultural group" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem

@@ -59,20 +59,14 @@ defineProps<Props>();
                 </div>
 
                 <!-- Title -->
-                <h1
-                    class="mt-4 font-serif text-4xl tracking-tight sm:text-5xl"
-                >
+                <h1 class="mt-4 font-serif text-4xl tracking-tight sm:text-5xl">
                     {{ teaching.title }}
                 </h1>
 
-                <div
-                    class="mt-6 h-1 w-16 rounded-full bg-primary"
-                />
+                <div class="mt-6 h-1 w-16 rounded-full bg-primary" />
 
                 <!-- Content -->
-                <article
-                    class="prose prose-lg mt-8 max-w-none text-foreground"
-                >
+                <article class="prose prose-lg mt-8 max-w-none text-foreground">
                     <p
                         v-for="(paragraph, i) in teaching.content.split('\n')"
                         :key="i"

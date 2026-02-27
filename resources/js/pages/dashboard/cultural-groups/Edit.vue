@@ -115,10 +115,7 @@ const confirmDelete = () => {
                 <div class="space-y-2">
                     <Label for="name">Name</Label>
                     <Input id="name" v-model="form.name" />
-                    <p
-                        v-if="form.errors.name"
-                        class="text-sm text-destructive"
-                    >
+                    <p v-if="form.errors.name" class="text-sm text-destructive">
                         {{ form.errors.name }}
                     </p>
                 </div>
@@ -142,9 +139,7 @@ const confirmDelete = () => {
                             <SelectItem value="family">Family</SelectItem>
                             <SelectItem value="group">Group</SelectItem>
                             <SelectItem value="sub_group">Sub Group</SelectItem>
-                            <SelectItem value="community"
-                                >Community</SelectItem
-                            >
+                            <SelectItem value="community">Community</SelectItem>
                             <SelectItem value="clan">Clan</SelectItem>
                         </SelectContent>
                     </Select>

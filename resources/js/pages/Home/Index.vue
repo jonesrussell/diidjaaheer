@@ -119,8 +119,7 @@ const teachingCards = [
     },
     {
         title: 'Language',
-        description:
-            'Language resources and revitalization efforts.',
+        description: 'Language resources and revitalization efforts.',
         icon: 'Languages',
         borderColor: 'border-sage',
     },
