@@ -6,6 +6,7 @@ import {
     Folder,
     LayoutGrid,
     Newspaper,
+    TreePine,
     Users,
 } from 'lucide-vue-next';
 import NavFooter from '@/components/NavFooter.vue';
@@ -39,6 +40,11 @@ const mainNavItems: NavItem[] = [
         title: 'Events',
         href: '/dashboard/events',
         icon: Calendar,
+    },
+    {
+        title: 'Cultural Groups',
+        href: '/dashboard/cultural-groups',
+        icon: TreePine,
     },
     {
         title: 'Groups',

@@ -18,10 +18,16 @@ class Teaching extends Model
         'type',
         'content',
         'media_id',
+        'cultural_group_id',
     ];
 
     public function media(): BelongsTo
     {
         return $this->belongsTo(Media::class);
+    }
+
+    public function culturalGroup(): BelongsTo
+    {
+        return $this->belongsTo(CulturalGroup::class);
     }
 }
