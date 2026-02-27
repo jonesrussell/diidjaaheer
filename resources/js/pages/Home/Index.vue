@@ -106,21 +106,21 @@ const teachingCards = [
     {
         title: 'Culture',
         description:
-            'Traditions, ceremonies, and the Anishinaabe way of life passed down through generations.',
+            'Traditions, ceremonies, and ways of life passed down through generations.',
         icon: 'BookOpen',
         borderColor: 'border-primary',
     },
     {
         title: 'History',
         description:
-            'The rich history of the Anishinaabe people across Turtle Island.',
+            'The rich histories of Indigenous peoples across Turtle Island.',
         icon: 'History',
         borderColor: 'border-accent',
     },
     {
         title: 'Language',
         description:
-            'Anishinaabemowin language resources and learning materials.',
+            'Language resources and revitalization efforts.',
         icon: 'Languages',
         borderColor: 'border-sage',
     },
@@ -130,7 +130,7 @@ const sectionAccentColors = ['bg-primary', 'bg-accent', 'bg-sage'];
 </script>
 
 <template>
-    <PublicLayout title="Diidjaaheer — Anishinaabe News, Culture & Community">
+    <PublicLayout title="Diidjaaheer — Indigenous News, Culture & Community">
         <!-- Hero Section -->
         <section class="noise-texture overflow-hidden py-16 sm:py-20 md:py-28">
             <div class="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
@@ -140,7 +140,7 @@ const sectionAccentColors = ['bg-primary', 'bg-accent', 'bg-sage'];
                     <span
                         class="animate-fade-in-up block"
                         style="animation-delay: 0s"
-                        >Anishinaabe</span
+                        >Indigenous</span
                     >
                     <span
                         class="animate-fade-in-up block"
@@ -161,7 +161,7 @@ const sectionAccentColors = ['bg-primary', 'bg-accent', 'bg-sage'];
                     class="animate-fade-in-up mx-auto mt-6 max-w-2xl text-lg text-muted-foreground sm:text-xl"
                     style="animation-delay: 0.55s"
                 >
-                    Your gathering place for Anishinaabe news, powwow events,
+                    Your gathering place for Indigenous news, powwow events,
                     cultural teachings, and community connections across Turtle
                     Island.
                 </p>
@@ -181,6 +181,11 @@ const sectionAccentColors = ['bg-primary', 'bg-accent', 'bg-sage'];
                                 label: 'Powwows',
                                 href: '#events',
                                 color: 'bg-accent/10 text-accent hover:bg-accent/20',
+                            },
+                            {
+                                label: 'Culture',
+                                href: '/culture',
+                                color: 'bg-primary/10 text-primary hover:bg-primary/20',
                             },
                             {
                                 label: 'Teachings',
@@ -415,7 +420,7 @@ const sectionAccentColors = ['bg-primary', 'bg-accent', 'bg-sage'];
                     </h2>
                 </div>
                 <p class="mt-3 text-muted-foreground">
-                    Online and offline Anishinaabe community organizations and
+                    Online and offline Indigenous community organizations and
                     groups.
                 </p>
                 <div class="mt-8 grid gap-6 sm:grid-cols-2">
