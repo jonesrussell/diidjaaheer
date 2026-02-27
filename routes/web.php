@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Dashboard\CulturalGroupController;
 use App\Http\Controllers\Dashboard\EventController;
 use App\Http\Controllers\Dashboard\GroupController;
 use App\Http\Controllers\Dashboard\TeachingController;
@@ -21,6 +22,7 @@ Route::get('dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::resource('dashboard/cultural-groups', CulturalGroupController::class)->names('dashboard.cultural-groups');
     Route::resource('dashboard/events', EventController::class)->names('dashboard.events');
     Route::resource('dashboard/groups', GroupController::class)->names('dashboard.groups');
     Route::resource('dashboard/teachings', TeachingController::class)->names('dashboard.teachings');
