@@ -1,14 +1,6 @@
 <script setup lang="ts">
 import { Head, router } from '@inertiajs/vue3';
-import {
-    BookOpen,
-    History,
-    Languages,
-    Pencil,
-    Plus,
-    Sparkles,
-    Trash2,
-} from 'lucide-vue-next';
+import { Pencil, Plus, Trash2, TreePine } from 'lucide-vue-next';
 import { ref } from 'vue';
 
 import DeleteConfirmDialog from '@/components/admin/DeleteConfirmDialog.vue';
@@ -18,18 +10,18 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import AppLayout from '@/layouts/AppLayout.vue';
 
-interface Teaching {
+interface CulturalGroup {
     id: number;
-    title: string;
+    name: string;
     slug: string;
-    type: string;
-    content: string;
-    cultural_group?: { id: number; name: string };
+    depth_type: string;
+    description: string | null;
+    parent: { id: number; name: string } | null;
 }
 
 interface Props {
-    teachings: {
-        data: Teaching[];
+    culturalGroups: {
+        data: CulturalGroup[];
         current_page: number;
         last_page: number;
         from: number;
@@ -38,26 +30,26 @@ interface Props {
         prev_page_url: string | null;
         next_page_url: string | null;
     };
-    filters: { search?: string; type?: string };
+    filters: { search?: string; depth_type?: string };
     stats: {
         total: number;
-        culture: number;
-        history: number;
-        language: number;
+        root: number;
+        family: number;
+        group: number;
     };
 }
 
 const props = defineProps<Props>();
 
-const routePrefix = '/dashboard/teachings';
+const routePrefix = '/dashboard/cultural-groups';
 const breadcrumbs = [
     { title: 'Dashboard', href: '/dashboard' },
-    { title: 'Teachings', href: routePrefix },
+    { title: 'Cultural Groups', href: routePrefix },
 ];
 
 const search = ref(props.filters.search ?? '');
 const deleteDialogOpen = ref(false);
-const teachingToDelete = ref<Teaching | null>(null);
+const groupToDelete = ref<CulturalGroup | null>(null);
 const isDeleting = ref(false);
 
 const applySearch = () => {
@@ -69,19 +61,19 @@ const applySearch = () => {
     });
 };
 
-const handleDelete = (teaching: Teaching) => {
-    teachingToDelete.value = teaching;
+const handleDelete = (group: CulturalGroup) => {
+    groupToDelete.value = group;
     deleteDialogOpen.value = true;
 };
 
 const confirmDelete = () => {
-    if (!teachingToDelete.value) return;
+    if (!groupToDelete.value) return;
     isDeleting.value = true;
-    router.delete(`${routePrefix}/${teachingToDelete.value.id}`, {
+    router.delete(`${routePrefix}/${groupToDelete.value.id}`, {
         preserveScroll: true,
         onSuccess: () => {
             deleteDialogOpen.value = false;
-            teachingToDelete.value = null;
+            groupToDelete.value = null;
         },
         onFinish: () => {
             isDeleting.value = false;
@@ -89,7 +81,8 @@ const confirmDelete = () => {
     });
 };
 
-const truncate = (text: string, length: number = 80) => {
+const truncate = (text: string | null, length: number = 80) => {
+    if (!text) return '\u2014';
     return text.length > length ? text.slice(0, length) + '...' : text;
 };
 
@@ -99,7 +92,7 @@ const goToPage = (url: string | null) => {
 </script>
 
 <template>
-    <Head title="Teachings - Dashboard" />
+    <Head title="Cultural Groups - Dashboard" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div
@@ -108,42 +101,36 @@ const goToPage = (url: string | null) => {
             <!-- Header -->
             <div class="flex items-center justify-between">
                 <div>
-                    <h1 class="text-3xl font-bold tracking-tight">Teachings</h1>
+                    <h1 class="text-3xl font-bold tracking-tight">
+                        Cultural Groups
+                    </h1>
                     <p class="mt-1 text-muted-foreground">
-                        Manage cultural teachings and knowledge
+                        Manage cultural groups and hierarchies
                     </p>
                 </div>
                 <Button as="a" :href="`${routePrefix}/create`">
                     <Plus class="mr-2 h-4 w-4" />
-                    Create Teaching
+                    Create Cultural Group
                 </Button>
             </div>
 
             <!-- Stats -->
             <div class="grid gap-4 md:grid-cols-4">
-                <StatCard label="Total" :value="stats.total" :icon="BookOpen" />
+                <StatCard label="Total" :value="stats.total" :icon="TreePine" />
+                <StatCard label="Root" :value="stats.root" :icon="TreePine" />
                 <StatCard
-                    label="Culture"
-                    :value="stats.culture"
-                    :icon="Sparkles"
+                    label="Family"
+                    :value="stats.family"
+                    :icon="TreePine"
                 />
-                <StatCard
-                    label="History"
-                    :value="stats.history"
-                    :icon="History"
-                />
-                <StatCard
-                    label="Language"
-                    :value="stats.language"
-                    :icon="Languages"
-                />
+                <StatCard label="Group" :value="stats.group" :icon="TreePine" />
             </div>
 
             <!-- Search -->
             <div class="flex gap-2">
                 <Input
                     v-model="search"
-                    placeholder="Search teachings..."
+                    placeholder="Search cultural groups..."
                     class="max-w-sm"
                     @keyup.enter="applySearch"
                 />
@@ -156,16 +143,16 @@ const goToPage = (url: string | null) => {
                     <thead>
                         <tr class="border-b bg-muted/50">
                             <th class="px-4 py-3 text-left text-sm font-medium">
-                                Title
+                                Name
                             </th>
                             <th class="px-4 py-3 text-left text-sm font-medium">
-                                Type
+                                Depth Type
                             </th>
                             <th class="px-4 py-3 text-left text-sm font-medium">
-                                Cultural Group
+                                Parent
                             </th>
                             <th class="px-4 py-3 text-left text-sm font-medium">
-                                Content
+                                Description
                             </th>
                             <th
                                 class="px-4 py-3 text-right text-sm font-medium"
@@ -176,27 +163,23 @@ const goToPage = (url: string | null) => {
                     </thead>
                     <tbody>
                         <tr
-                            v-for="teaching in teachings.data"
-                            :key="teaching.id"
+                            v-for="group in culturalGroups.data"
+                            :key="group.id"
                             class="border-b last:border-0"
                         >
                             <td class="px-4 py-3 text-sm font-medium">
-                                {{ teaching.title }}
+                                {{ group.name }}
                             </td>
                             <td class="px-4 py-3 text-sm">
                                 <Badge variant="secondary">{{
-                                    teaching.type
+                                    group.depth_type
                                 }}</Badge>
                             </td>
                             <td class="px-4 py-3 text-sm text-muted-foreground">
-                                {{
-                                    teaching.cultural_group?.name
-                                        ? teaching.cultural_group.name
-                                        : '\u2014'
-                                }}
+                                {{ group.parent?.name ?? '\u2014' }}
                             </td>
                             <td class="px-4 py-3 text-sm text-muted-foreground">
-                                {{ truncate(teaching.content) }}
+                                {{ truncate(group.description) }}
                             </td>
                             <td class="px-4 py-3 text-right">
                                 <div
@@ -206,14 +189,14 @@ const goToPage = (url: string | null) => {
                                         variant="ghost"
                                         size="sm"
                                         as="a"
-                                        :href="`${routePrefix}/${teaching.id}/edit`"
+                                        :href="`${routePrefix}/${group.id}/edit`"
                                     >
                                         <Pencil class="h-4 w-4" />
                                     </Button>
                                     <Button
                                         variant="ghost"
                                         size="sm"
-                                        @click="handleDelete(teaching)"
+                                        @click="handleDelete(group)"
                                     >
                                         <Trash2
                                             class="h-4 w-4 text-destructive"
@@ -222,12 +205,12 @@ const goToPage = (url: string | null) => {
                                 </div>
                             </td>
                         </tr>
-                        <tr v-if="teachings.data.length === 0">
+                        <tr v-if="culturalGroups.data.length === 0">
                             <td
                                 colspan="5"
                                 class="px-4 py-8 text-center text-muted-foreground"
                             >
-                                No teachings found.
+                                No cultural groups found.
                             </td>
                         </tr>
                     </tbody>
@@ -236,27 +219,28 @@ const goToPage = (url: string | null) => {
 
             <!-- Pagination -->
             <div
-                v-if="teachings.last_page > 1"
+                v-if="culturalGroups.last_page > 1"
                 class="flex items-center justify-between"
             >
                 <p class="text-sm text-muted-foreground">
-                    Showing {{ teachings.from }} to {{ teachings.to }} of
-                    {{ teachings.total }}
+                    Showing {{ culturalGroups.from }} to
+                    {{ culturalGroups.to }} of
+                    {{ culturalGroups.total }}
                 </p>
                 <div class="flex gap-2">
                     <Button
                         variant="outline"
                         size="sm"
-                        :disabled="!teachings.prev_page_url"
-                        @click="goToPage(teachings.prev_page_url)"
+                        :disabled="!culturalGroups.prev_page_url"
+                        @click="goToPage(culturalGroups.prev_page_url)"
                     >
                         Previous
                     </Button>
                     <Button
                         variant="outline"
                         size="sm"
-                        :disabled="!teachings.next_page_url"
-                        @click="goToPage(teachings.next_page_url)"
+                        :disabled="!culturalGroups.next_page_url"
+                        @click="goToPage(culturalGroups.next_page_url)"
                     >
                         Next
                     </Button>
@@ -266,14 +250,14 @@ const goToPage = (url: string | null) => {
 
         <DeleteConfirmDialog
             v-model:open="deleteDialogOpen"
-            title="Delete Teaching"
-            :description="`Are you sure you want to delete &quot;${teachingToDelete?.title}&quot;? This action cannot be undone.`"
+            title="Delete Cultural Group"
+            :description="`Are you sure you want to delete &quot;${groupToDelete?.name}&quot;? This action cannot be undone.`"
             :loading="isDeleting"
             @confirm="confirmDelete"
             @cancel="
                 () => {
                     deleteDialogOpen = false;
-                    teachingToDelete = null;
+                    groupToDelete = null;
                 }
             "
         />

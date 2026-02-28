@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
+        $this->call(CulturalGroupSeeder::class);
+
         Event::factory(6)->create();
         Group::factory(4)->create();
         Teaching::factory(6)->create();

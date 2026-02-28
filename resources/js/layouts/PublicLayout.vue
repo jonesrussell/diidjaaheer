@@ -25,15 +25,16 @@ const mobileOpen = ref(false);
 const navLinks = [
     { label: 'News', href: '#news' },
     { label: 'Events', href: '#events' },
-    { label: 'Teachings', href: '#teachings' },
+    { label: 'Culture', href: '/culture' },
+    { label: 'Teachings', href: '/teachings' },
     { label: 'Community', href: '#community' },
-    { label: 'Language', href: '#language' },
 ];
 
 const footerExplore = [
     { label: 'News', href: '#news' },
     { label: 'Events', href: '#events' },
-    { label: 'Teachings', href: '#teachings' },
+    { label: 'Culture', href: '/culture' },
+    { label: 'Teachings', href: '/teachings' },
 ];
 
 const footerCommunity = [
@@ -180,8 +181,7 @@ const footerCommunity = [
                             Diidjaaheer
                         </div>
                         <p class="mt-2 text-sm text-background/60">
-                            North American Anishinaabe news, culture &amp;
-                            community
+                            Indigenous news, culture &amp; community
                         </p>
                     </div>
 

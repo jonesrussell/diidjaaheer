@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\CulturalGroup;
 use App\Models\Teaching;
 use App\Models\User;
 
@@ -50,6 +51,24 @@ test('teaching can be updated', function () {
         ->assertRedirect('/dashboard/teachings');
 
     expect($teaching->fresh()->title)->toBe('Updated Teaching');
+});
+
+test('teaching can be created with cultural group', function () {
+    $user = User::factory()->create();
+    $group = CulturalGroup::factory()->create();
+
+    $this->actingAs($user)
+        ->post('/dashboard/teachings', [
+            'title' => 'Seven Grandfather Teachings',
+            'slug' => 'seven-grandfather-teachings-cg',
+            'type' => 'culture',
+            'content' => 'The Seven Grandfather Teachings.',
+            'cultural_group_id' => $group->id,
+        ])
+        ->assertRedirect('/dashboard/teachings');
+
+    $teaching = Teaching::where('slug', 'seven-grandfather-teachings-cg')->first();
+    expect($teaching->cultural_group_id)->toBe($group->id);
 });
 
 test('teaching can be deleted', function () {

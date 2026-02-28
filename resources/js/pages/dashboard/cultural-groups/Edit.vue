@@ -16,34 +16,44 @@ import {
 } from '@/components/ui/select';
 import AppLayout from '@/layouts/AppLayout.vue';
 
+interface ParentOption {
+    id: number;
+    name: string;
+    depth_type: string;
+}
+
 interface Props {
-    teaching: {
+    culturalGroup: {
         id: number;
-        title: string;
+        name: string;
         slug: string;
-        type: string;
-        content: string;
-        cultural_group_id: number | null;
+        depth_type: string;
+        description: string | null;
+        parent_id: number | null;
+        parent: { id: number; name: string } | null;
     };
-    culturalGroups: Array<{ id: number; name: string }>;
+    parentOptions: ParentOption[];
 }
 
 const props = defineProps<Props>();
 
-const routePrefix = '/dashboard/teachings';
+const routePrefix = '/dashboard/cultural-groups';
 const breadcrumbs = [
     { title: 'Dashboard', href: '/dashboard' },
-    { title: 'Teachings', href: routePrefix },
-    { title: 'Edit', href: `${routePrefix}/${props.teaching.id}/edit` },
+    { title: 'Cultural Groups', href: routePrefix },
+    {
+        title: 'Edit',
+        href: `${routePrefix}/${props.culturalGroup.id}/edit`,
+    },
 ];
 
 const form = useForm({
-    title: props.teaching.title,
-    slug: props.teaching.slug,
-    type: props.teaching.type,
-    content: props.teaching.content,
-    cultural_group_id: props.teaching.cultural_group_id
-        ? String(props.teaching.cultural_group_id)
+    name: props.culturalGroup.name,
+    slug: props.culturalGroup.slug,
+    depth_type: props.culturalGroup.depth_type,
+    description: props.culturalGroup.description ?? '',
+    parent_id: props.culturalGroup.parent_id
+        ? String(props.culturalGroup.parent_id)
         : '',
 });
 
@@ -53,13 +63,13 @@ const isDeleting = ref(false);
 const submit = () => {
     form.transform((data) => ({
         ...data,
-        cultural_group_id: data.cultural_group_id || null,
-    })).put(`${routePrefix}/${props.teaching.id}`);
+        parent_id: data.parent_id || null,
+    })).put(`${routePrefix}/${props.culturalGroup.id}`);
 };
 
 const confirmDelete = () => {
     isDeleting.value = true;
-    router.delete(`${routePrefix}/${props.teaching.id}`, {
+    router.delete(`${routePrefix}/${props.culturalGroup.id}`, {
         onFinish: () => {
             isDeleting.value = false;
         },
@@ -68,7 +78,7 @@ const confirmDelete = () => {
 </script>
 
 <template>
-    <Head :title="`Edit: ${teaching.title} - Dashboard`" />
+    <Head :title="`Edit: ${culturalGroup.name} - Dashboard`" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div
@@ -85,13 +95,13 @@ const confirmDelete = () => {
                         class="mb-2"
                     >
                         <ArrowLeft class="mr-2 h-4 w-4" />
-                        Back to Teachings
+                        Back to Cultural Groups
                     </Button>
                     <h1 class="text-3xl font-bold tracking-tight">
-                        Edit Teaching
+                        Edit Cultural Group
                     </h1>
                     <p class="mt-1 text-muted-foreground">
-                        Update teaching details
+                        Update cultural group details
                     </p>
                 </div>
                 <Button variant="destructive" @click="deleteDialogOpen = true">
@@ -103,13 +113,10 @@ const confirmDelete = () => {
             <!-- Form -->
             <form class="max-w-2xl space-y-6" @submit.prevent="submit">
                 <div class="space-y-2">
-                    <Label for="title">Title</Label>
-                    <Input id="title" v-model="form.title" />
-                    <p
-                        v-if="form.errors.title"
-                        class="text-sm text-destructive"
-                    >
-                        {{ form.errors.title }}
+                    <Label for="name">Name</Label>
+                    <Input id="name" v-model="form.name" />
+                    <p v-if="form.errors.name" class="text-sm text-destructive">
+                        {{ form.errors.name }}
                     </p>
                 </div>
 
@@ -122,58 +129,64 @@ const confirmDelete = () => {
                 </div>
 
                 <div class="space-y-2">
-                    <Label for="type">Type</Label>
-                    <Select v-model="form.type">
+                    <Label for="depth_type">Depth Type</Label>
+                    <Select v-model="form.depth_type">
                         <SelectTrigger>
-                            <SelectValue placeholder="Select type" />
+                            <SelectValue placeholder="Select depth type" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="culture">Culture</SelectItem>
-                            <SelectItem value="history">History</SelectItem>
-                            <SelectItem value="language">Language</SelectItem>
+                            <SelectItem value="root">Root</SelectItem>
+                            <SelectItem value="family">Family</SelectItem>
+                            <SelectItem value="group">Group</SelectItem>
+                            <SelectItem value="sub_group">Sub Group</SelectItem>
+                            <SelectItem value="community">Community</SelectItem>
+                            <SelectItem value="clan">Clan</SelectItem>
                         </SelectContent>
                     </Select>
-                    <p v-if="form.errors.type" class="text-sm text-destructive">
-                        {{ form.errors.type }}
+                    <p
+                        v-if="form.errors.depth_type"
+                        class="text-sm text-destructive"
+                    >
+                        {{ form.errors.depth_type }}
                     </p>
                 </div>
 
                 <div class="space-y-2">
-                    <Label for="cultural_group_id">Cultural Group</Label>
-                    <Select v-model="form.cultural_group_id">
+                    <Label for="parent_id">Parent Group</Label>
+                    <Select v-model="form.parent_id">
                         <SelectTrigger>
-                            <SelectValue placeholder="No cultural group" />
+                            <SelectValue placeholder="No parent (top level)" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem
-                                v-for="group in culturalGroups"
-                                :key="group.id"
-                                :value="String(group.id)"
+                                v-for="option in parentOptions"
+                                :key="option.id"
+                                :value="String(option.id)"
                             >
-                                {{ group.name }}
+                                {{ option.name }} ({{ option.depth_type }})
                             </SelectItem>
                         </SelectContent>
                     </Select>
                     <p
-                        v-if="form.errors.cultural_group_id"
+                        v-if="form.errors.parent_id"
                         class="text-sm text-destructive"
                     >
-                        {{ form.errors.cultural_group_id }}
+                        {{ form.errors.parent_id }}
                     </p>
                 </div>
 
                 <div class="space-y-2">
-                    <Label for="content">Content</Label>
+                    <Label for="description">Description</Label>
                     <textarea
-                        id="content"
-                        v-model="form.content"
+                        id="description"
+                        v-model="form.description"
                         class="min-h-[120px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-base shadow-xs outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm dark:bg-input/30"
                     />
                     <p
-                        v-if="form.errors.content"
+                        v-if="form.errors.description"
                         class="text-sm text-destructive"
                     >
-                        {{ form.errors.content }}
+                        {{ form.errors.description }}
                     </p>
                 </div>
 
@@ -195,8 +208,8 @@ const confirmDelete = () => {
 
         <DeleteConfirmDialog
             v-model:open="deleteDialogOpen"
-            title="Delete Teaching"
-            :description="`Are you sure you want to delete &quot;${teaching.title}&quot;? This action cannot be undone.`"
+            title="Delete Cultural Group"
+            :description="`Are you sure you want to delete &quot;${culturalGroup.name}&quot;? This action cannot be undone.`"
             :loading="isDeleting"
             @confirm="confirmDelete"
             @cancel="() => (deleteDialogOpen = false)"
