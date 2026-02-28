@@ -10,13 +10,14 @@ return [
         'channels' => array_filter(array_map(
             'trim',
             explode(',', env('NORTHCLOUD_CHANNELS', implode(',', [
-                // Layer 7: Anishinaabe (publisher does not emit articles:default)
-                'articles:anishinaabe',
-                'anishinaabe:category:culture',
-                'anishinaabe:category:language',
-                'anishinaabe:category:governance',
-                'anishinaabe:category:land-rights',
-                'anishinaabe:category:education',
+                // Layer 7: Indigenous (content:indigenous from publisher Layer 7)
+                'content:indigenous',
+                'indigenous:category:culture',
+                'indigenous:category:language',
+                'indigenous:category:governance',
+                'indigenous:category:land-rights',
+                'indigenous:category:education',
+                'indigenous:category:anishinaabe',
             ])))
         )),
     ],
